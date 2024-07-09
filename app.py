@@ -21,7 +21,8 @@ import logging
 logging.basicConfig(level=logging.WARN)
 logger = logging.getLogger(__name__)
 
-
+import dagshub
+dagshub.init(repo_owner='RuchithaMekala', repo_name='mlflow', mlflow=True)
 def eval_metrics(actual, pred):
     rmse = np.sqrt(mean_squared_error(actual, pred))
     mae = mean_absolute_error(actual, pred)
@@ -79,7 +80,10 @@ if __name__ == "__main__":
         #signature = infer_signature(train_x, predictions)
 
         ## For Remote server only(DAGShub)
+        remote_server_uri="https://dagshub.com/RuchithaMekala/mlflow.mlflow"
+        mlflow.set_tracking_uri(remote_server_uri)
 
+        
         
         tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 
